@@ -1,7 +1,8 @@
 package main
 
 import (
-	"compbot/event"
+	"compbot/configs"
+	"compbot/events"
 	"context"
 	_ "database/sql"
 	"fmt"
@@ -18,6 +19,7 @@ import (
 )
 
 func main() {
+	cache := configs.DatabaseCache()
 	dbLog := waLog.Stdout("Database", "ERROR", true)
 	// Make sure you add appropriate DB connector imports, e.g. github.com/mattn/go-sqlite3 for SQLite
 	container, err := sqlstore.New("sqlite3", "file:examplestore.db?_foreign_keys=on", dbLog)
@@ -31,7 +33,7 @@ func main() {
 	}
 	clientLog := waLog.Stdout("Client", "ERROR", true)
 	client := whatsmeow.NewClient(deviceStore, clientLog)
-	d := event.ClientImpl(client)
+	d := events.ClientImpl(client, cache)
 	client.AddEventHandler(d.EventHandler)
 
 	log.Print("Running bot\n\n")
