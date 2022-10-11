@@ -5,13 +5,13 @@ import (
 	"go.mau.fi/whatsmeow/types/events"
 )
 
-type libImpl struct {
+type LibImpl struct {
 	WAClient *whatsmeow.Client
 	Message  *events.Message
 }
 
-func LiblImpl(client *whatsmeow.Client, message *events.Message) *libImpl {
-	return &libImpl{
+func LiblImpl(client *whatsmeow.Client, message *events.Message) *LibImpl {
+	return &LibImpl{
 		WAClient: client,
 		Message:  message,
 	}

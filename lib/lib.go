@@ -8,7 +8,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-func (simp *libImpl) SendInfoBotMessage(content string, footer string) {
+func (simp *LibImpl) SendInfoBotMessage(content string, footer string) {
 	simp.WAClient.SendMessage(context.Background(), simp.Message.Info.Chat, simp.Message.Info.ID, &waProto.Message{
 		TemplateMessage: &waProto.TemplateMessage{
 			HydratedTemplate: &waProto.TemplateMessage_HydratedFourRowTemplate{
@@ -19,7 +19,7 @@ func (simp *libImpl) SendInfoBotMessage(content string, footer string) {
 	})
 }
 
-func (simp *libImpl) SendReplyMessage(text string) (whatsmeow.SendResponse, error) {
+func (simp *LibImpl) SendReplyMessage(text string) (whatsmeow.SendResponse, error) {
 	return simp.WAClient.SendMessage(context.Background(), simp.Message.Info.Chat, simp.Message.Info.ID, &waProto.Message{
 		ExtendedTextMessage: &waProto.ExtendedTextMessage{
 			Text: proto.String(text),
