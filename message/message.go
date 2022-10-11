@@ -10,14 +10,22 @@ import (
 	"go.mau.fi/whatsmeow/types/events"
 )
 
-const infoBot string = `*Compbot online compiler bot*
+const infoBot string = `*Compbot online compiler and interpreted bot*
 _List command yang tersedia:_
 
-!compbot@c          gcc compiler
-!compbot@cpp        g++ compiler
-!compbot@python2    python2 interpreted
-!compbpt@python3    python3 interpreted
-!compbot@nodejs     node interpreted
+!compbot@c					gcc compiler
+!compbot@cpp				g++ compiler
+!compbot@c#					.NET compiler
+!compbot@dart				Dart compiler
+!compbot@go					Golang compiler
+!compbot@java				Java 11 compiler
+!compbot@kotlin				Kotlin compiler
+!compbot@pascal				Pascal compiler
+!compbot@swift				Swift compiler
+!compbot@python2			python2 interpreted
+!compbpt@python3			python3 interpreted
+!compbot@nodejs				node interpreted
+!compbot@php				php interpreted
 			`
 
 func replyPrepareLanguage(language string) string {
