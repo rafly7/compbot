@@ -3,6 +3,7 @@ package message
 import (
 	"compbot/lib"
 	"compbot/services"
+	"compbot/utils"
 	"fmt"
 
 	"github.com/go-redis/redis/v8"
@@ -38,31 +39,67 @@ func Message(client *whatsmeow.Client, msg *events.Message, rdb *redis.Client) {
 	if msg.Info.IsGroup {
 		// var messageExtended = make(chan proto.Message)
 		comp := fmt.Sprintf("%s@compbot", msg.Info.Sender.User)
-		if msg.Message.GetConversation() == "!compbot" {
-			l.SendInfoBotMessage(infoBot, "Bot: compbot TPLE 09")
-		} else if msg.Message.GetConversation() == "!compbot@c" {
-			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
-				return l.SendReplyMessage(replyPrepareLanguage("C"))
-			})
-		} else if msg.Message.GetConversation() == "!compbot@cpp" {
-			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
-				return l.SendReplyMessage(replyPrepareLanguage("C++"))
-			})
-		} else if msg.Message.GetConversation() == "!compbot@python2" {
-			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
-				return l.SendReplyMessage(replyPrepareLanguage("Python 2"))
-			})
-		} else if msg.Message.GetConversation() == "!compbot@python3" {
-			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
-				return l.SendReplyMessage(replyPrepareLanguage("Python 3"))
-			})
-		} else if msg.Message.GetConversation() == "!compbot@nodejs" {
-			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
-				return l.SendReplyMessage(replyPrepareLanguage("Nodejs"))
-			})
-		} else if msg.Message.ExtendedTextMessage != nil {
+		msgConversation := msg.Message.GetConversation()
+		if msg.Message.ExtendedTextMessage != nil {
 			// log.Println(msg.Info.Type)
 			onlineCompilerConversation(msg, rdb, comp, l)
+			return
+		}
+		switch msgConversation {
+		case utils.OCBanner:
+			l.SendInfoBotMessage(infoBot, "Bot: compbot TPLE 09")
+		case utils.OCLangC:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunC))
+			})
+		case utils.OCLangCPP:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunCPP))
+			})
+		case utils.OCLangCSharp:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunCSharp))
+			})
+		case utils.OCLangDart:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunDart))
+			})
+		case utils.OCLangGo:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunGo))
+			})
+		case utils.OCLangJava:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunJava))
+			})
+		case utils.OCLangKotlin:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunKotlin))
+			})
+		case utils.OCLangPascal:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunPascal))
+			})
+		case utils.OCLangSwift:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCLangSwift))
+			})
+		case utils.OCLangPython2:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunPython2))
+			})
+		case utils.OCLangPython3:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunPython3))
+			})
+		case utils.OCLangNodejs:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunNodejs))
+			})
+		case utils.OCLangPhp:
+			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunPhp))
+			})
 		}
 	}
 }

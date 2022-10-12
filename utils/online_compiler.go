@@ -1,0 +1,32 @@
+package utils
+
+const (
+	OCBanner      = "!compbot"
+	OCLangC       = "!compbot@c"
+	OCLangCPP     = "!compbot@cpp"
+	OCLangCSharp  = "!compbot@c#"
+	OCLangDart    = "!compbot@dart"
+	OCLangGo      = "!compbot@go"
+	OCLangJava    = "!compbot@java"
+	OCLangKotlin  = "!compbot@kotlin"
+	OCLangPascal  = "!compbot@pascal"
+	OCLangSwift   = "!compbot@swift"
+	OCLangPython2 = "!compbot@python2"
+	OCLangPython3 = "!compbot@python3"
+	OCLangNodejs  = "!compbot@nodejs"
+	OCLangPhp     = "!compbot@php"
+
+	OCRunC       = "C"
+	OCRunCPP     = "C++"
+	OCRunCSharp  = "C#"
+	OCRunDart    = "Dart"
+	OCRunGo      = "Golang"
+	OCRunJava    = "Java 11"
+	OCRunKotlin  = "Kotlin"
+	OCRunPascal  = "Pascal"
+	OCRunSwift   = "Swift"
+	OCRunPython2 = "Python 2"
+	OCRunPython3 = "Python 3"
+	OCRunNodejs  = "Nodejs"
+	OCRunPhp     = "Php"
+)
