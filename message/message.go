@@ -27,7 +27,8 @@ _List command yang tersedia:_
 !compbpt@python3			python3 interpreted
 !compbot@nodejs				node interpreted
 !compbot@php				php interpreted
-			`
+
+_Bot: compbot TPLE 09_`
 
 func replyPrepareLanguage(language string) string {
 	return fmt.Sprintf("Ok, beri saya beberapa kode %s untuk dieksekusi", language)
@@ -82,7 +83,7 @@ func Message(client *whatsmeow.Client, msg *events.Message, rdb *redis.Client) {
 			})
 		case utils.OCLangSwift:
 			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {
-				return l.SendReplyMessage(replyPrepareLanguage(utils.OCLangSwift))
+				return l.SendReplyMessage(replyPrepareLanguage(utils.OCRunSwift))
 			})
 		case utils.OCLangPython2:
 			services.OnlineCompilerValidationService(rdb, comp, func() (whatsmeow.SendResponse, error) {

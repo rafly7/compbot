@@ -4,6 +4,7 @@ import (
 	"compbot/configs"
 	"compbot/lib"
 	"compbot/services"
+	"compbot/utils"
 	"context"
 	"fmt"
 	"log"
@@ -29,7 +30,7 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 					replyBot := *msg.Message.ExtendedTextMessage.ContextInfo.QuotedMessage.Conversation
 					receiveText := *msg.Message.ExtendedTextMessage.Text
 					switch replyBot {
-					case replyPrepareLanguage("C"):
+					case replyPrepareLanguage(utils.OCRunC):
 						{
 							body := *payloadCodeCompiler("c", 5, receiveText)
 							res, err := services.RunCode(body)
@@ -42,7 +43,7 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 								return l.SendReplyMessage(output)
 							})
 						}
-					case replyPrepareLanguage("C++"):
+					case replyPrepareLanguage(utils.OCRunCPP):
 						{
 							body := *payloadCodeCompiler("cpp17", 1, receiveText)
 							res, err := services.RunCode(body)
@@ -55,7 +56,98 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 								return l.SendReplyMessage(output)
 							})
 						}
-					case replyPrepareLanguage("Python 2"):
+					case replyPrepareLanguage(utils.OCRunCSharp):
+						{
+							body := *payloadCodeCompiler("csharp", 4, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.cs", "main.cs")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunDart):
+						{
+							body := *payloadCodeCompiler("dart", 4, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.dart", "main.dart")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunGo):
+						{
+							body := *payloadCodeCompiler("go", 4, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.go", "main.go")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunJava):
+						{
+							body := *payloadCodeCompiler("java", 4, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.java", "main.java")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunKotlin):
+						{
+							body := *payloadCodeCompiler("kotlin", 3, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.kt", "main.kt")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunPascal):
+						{
+							body := *payloadCodeCompiler("pascal", 3, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.pas", "main.pas")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunSwift):
+						{
+							body := *payloadCodeCompiler("swift", 4, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.swift", "main.swift")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunPython2):
 						{
 							body := *payloadCodeCompiler("python2", 3, receiveText)
 							res, err := services.RunCode(body)
@@ -68,7 +160,7 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 								return l.SendReplyMessage(output)
 							})
 						}
-					case replyPrepareLanguage("Python 3"):
+					case replyPrepareLanguage(utils.OCRunPython3):
 						{
 							body := *payloadCodeCompiler("python3", 4, receiveText)
 							res, err := services.RunCode(body)
@@ -81,7 +173,7 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 								return l.SendReplyMessage(output)
 							})
 						}
-					case replyPrepareLanguage("Nodejs"):
+					case replyPrepareLanguage(utils.OCRunNodejs):
 						{
 							body := *payloadCodeCompiler("nodejs", 4, receiveText)
 							res, err := services.RunCode(body)
@@ -89,6 +181,19 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 								log.Print(err)
 							}
 							res = strings.ReplaceAll(res, "jdoodle.js", "main.js")
+							output := fmt.Sprintf("*Output:*\n%s", res)
+							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
+								return l.SendReplyMessage(output)
+							})
+						}
+					case replyPrepareLanguage(utils.OCRunPhp):
+						{
+							body := *payloadCodeCompiler("php", 4, receiveText)
+							res, err := services.RunCode(body)
+							if err != nil {
+								log.Print(err)
+							}
+							res = strings.ReplaceAll(res, "jdoodle.php", "main.php")
 							output := fmt.Sprintf("*Output:*\n%s", res)
 							deleteInfoUserOnlineCompiler(rdb, infoSender, func() (whatsmeow.SendResponse, error) {
 								return l.SendReplyMessage(output)

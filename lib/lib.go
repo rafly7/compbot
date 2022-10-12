@@ -10,12 +10,7 @@ import (
 
 func (simp *LibImpl) SendInfoBotMessage(content string, footer string) {
 	simp.WAClient.SendMessage(context.Background(), simp.Message.Info.Chat, simp.Message.Info.ID, &waProto.Message{
-		TemplateMessage: &waProto.TemplateMessage{
-			HydratedTemplate: &waProto.TemplateMessage_HydratedFourRowTemplate{
-				HydratedContentText: proto.String(content),
-				HydratedFooterText:  proto.String(footer),
-			},
-		},
+		Conversation: proto.String(content),
 	})
 }
 
