@@ -16,10 +16,8 @@ import (
 )
 
 func OnlineCompilerValidationService(rdb *redis.Client, infoSender string, cb func() (whatsmeow.SendResponse, error)) {
-	// log.Println(res.ID)
 	res, err := cb()
 	if err != nil {
-		// log.Print(err)
 		utils.Recover(err)
 		return
 	}

@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"go.mau.fi/whatsmeow"
+	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
 )
 
@@ -40,6 +41,12 @@ func Message(client *whatsmeow.Client, msg *events.Message, rdb *redis.Client) {
 	if msg.Info.IsGroup {
 		comp := fmt.Sprintf("%s@compbot", msg.Info.Sender.User)
 		msgConversation := msg.Message.GetConversation()
+		if msg.Info.IsFromMe {
+			err := client.SendPresence(types.PresenceAvailable)
+			if err != nil {
+				utils.Recover(err)
+			}
+		}
 		if msg.Message.ExtendedTextMessage != nil {
 			onlineCompilerConversation(msg, rdb, comp, l)
 			return
