@@ -38,11 +38,9 @@ func Message(client *whatsmeow.Client, msg *events.Message, rdb *redis.Client) {
 	l := lib.LiblImpl(client, msg)
 
 	if msg.Info.IsGroup {
-		// var messageExtended = make(chan proto.Message)
 		comp := fmt.Sprintf("%s@compbot", msg.Info.Sender.User)
 		msgConversation := msg.Message.GetConversation()
 		if msg.Message.ExtendedTextMessage != nil {
-			// log.Println(msg.Info.Type)
 			onlineCompilerConversation(msg, rdb, comp, l)
 			return
 		}

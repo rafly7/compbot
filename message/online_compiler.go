@@ -16,6 +16,11 @@ import (
 )
 
 func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSender string, l *lib.LibImpl) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Print(r)
+		}
+	}()
 	extendedMsg := msg.Message.GetExtendedTextMessage()
 	if extendedMsg != nil {
 		if msg.Message.ExtendedTextMessage.ContextInfo != nil && msg.Message.ExtendedTextMessage.Text != nil {
@@ -23,7 +28,7 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 			val, err := rdb.Get(context.Background(), infoSender).Result()
 			if err != redis.Nil {
 				if err != nil {
-					log.Print(err)
+					utils.Recover(err)
 					return
 				}
 				if val == *msg.Message.ExtendedTextMessage.ContextInfo.StanzaId {
@@ -35,7 +40,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("c", 5, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.c", "main.c")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -48,7 +54,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("cpp17", 1, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.cpp", "main.cpp")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -61,7 +68,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("csharp", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.cs", "main.cs")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -74,7 +82,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("dart", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.dart", "main.dart")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -87,7 +96,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("go", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.go", "main.go")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -100,7 +110,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("java", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.java", "main.java")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -113,7 +124,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("kotlin", 3, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.kt", "main.kt")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -126,7 +138,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("pascal", 3, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.pas", "main.pas")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -139,7 +152,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("swift", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.swift", "main.swift")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -152,7 +166,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("python2", 3, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.py", "main.py")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -165,7 +180,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("python3", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.py", "main.py")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -178,7 +194,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("nodejs", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.js", "main.js")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -191,7 +208,8 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 							body := *payloadCodeCompiler("php", 4, receiveText)
 							res, err := services.RunCode(body)
 							if err != nil {
-								log.Print(err)
+								utils.Recover(err)
+								return
 							}
 							res = strings.ReplaceAll(res, "jdoodle.php", "main.php")
 							output := fmt.Sprintf("*Output:*\n%s", res)
@@ -210,12 +228,12 @@ func onlineCompilerConversation(msg *events.Message, rdb *redis.Client, infoSend
 func deleteInfoUserOnlineCompiler(rdb *redis.Client, infoSender string, cb func() (whatsmeow.SendResponse, error)) {
 	_, errCB := cb()
 	if errCB != nil {
-		log.Print(errCB)
+		utils.Recover(errCB)
 		return
 	}
 	_, errRDB := rdb.Del(context.Background(), infoSender).Result()
 	if errRDB != nil {
-		log.Print(errRDB)
+		utils.Recover(errRDB)
 		return
 	}
 }
