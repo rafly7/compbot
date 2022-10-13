@@ -14,9 +14,18 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/mdp/qrterminal/v3"
 	"go.mau.fi/whatsmeow"
+	waProto "go.mau.fi/whatsmeow/binary/proto"
+	"go.mau.fi/whatsmeow/store"
 	"go.mau.fi/whatsmeow/store/sqlstore"
 	waLog "go.mau.fi/whatsmeow/util/log"
+	"google.golang.org/protobuf/proto"
 )
+
+func init() {
+	// Set Browser
+	store.DeviceProps.PlatformType = waProto.DeviceProps_CHROME.Enum()
+	store.DeviceProps.Os = proto.String("COMPBOT TPLE 09")
+}
 
 func main() {
 	cache := configs.DatabaseCache()
